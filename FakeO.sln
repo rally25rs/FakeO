@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeO", "FakeO\FakeO.csproj", "{7DDB9F91-0501-492A-8FF2-F7BF1C0EDB96}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeO.Tests", "FakeO.Tests\FakeO.Tests.csproj", "{BC8D3840-6CF2-4A14-A98E-9E736563A27F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1477124E-6203-4AA1-9187-D2CEFF832877}"
+	ProjectSection(SolutionItems) = preProject
+		FakeO.vsmdi = FakeO.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = FakeO.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7DDB9F91-0501-492A-8FF2-F7BF1C0EDB96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DDB9F91-0501-492A-8FF2-F7BF1C0EDB96}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DDB9F91-0501-492A-8FF2-F7BF1C0EDB96}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DDB9F91-0501-492A-8FF2-F7BF1C0EDB96}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BC8D3840-6CF2-4A14-A98E-9E736563A27F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BC8D3840-6CF2-4A14-A98E-9E736563A27F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BC8D3840-6CF2-4A14-A98E-9E736563A27F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BC8D3840-6CF2-4A14-A98E-9E736563A27F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
