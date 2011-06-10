@@ -1,7 +1,5 @@
-============================
-- - - - - FakeO - - - - - -
-Fake Object data population.
-============================
+# FakeO
+## Fake Object data population for .NET
 
 This simple utility library can be used to rig up data objects in .NET.
 The intention is that it be used in conjunction with other mocking tools, like Moq.
@@ -17,7 +15,7 @@ and Property2 set to 123, and put any fake data in the other properties" in a ni
 
 This is often done in Ruby with the Faker gem, so I wanted something simmilar in .NET.
 
-============================
+----------------------------
 
 Most of the stuff under FakeO is a copy of this .NET port of Ruby's Faker gem:
   https://github.com/slashdotdash/faker-cs/
@@ -26,9 +24,7 @@ FakeO.String.Random() is a port of Perl String::Random from here:
   http://cpansearch.perl.org/src/STEVE/String-Random-0.22/lib/String/Random.pm
 
 
-============================
-- - - - Using FakeO - - - -
-============================
+## Using FakeO
 
 The main 'entry point' of using FakeO is the FakeO.Create class.
 This class contains 2 groups of methods, the .New and .Fake methods.
@@ -66,20 +62,20 @@ These include:
   * DateTimes (picks a random date between the years 1900 and 2100)
   * TimeSpans (picks a random timespan between 0 and 10 days)
 A value for most built-in types can be retreived by simply doing:
+```c#
   var rndInt   = FakeO.Data.Random<int>();
   var rndFloat = FakeO.Data.Random<float>();
   var rndDate  = FakeO.Data.Random<DateTime>();
+```
   ...etc...
 
-============================
-- - - - - Examples - - - - -
-============================
-  
-----------
-Example 1:
-Get a single instance of an object.
-----------
 
+## Examples
+  
+### Example 1:
+**Get a single instance of an object.**
+
+```c#
 // example object class
 class Company()
 {
@@ -98,12 +94,12 @@ var comp = FakeO.Create.Fake<Company>(
 Assert.IsNotNull(comp.Name);                                           // the Name property was set
 Assert.IsTrue(comp.Phone.Length >= 12);                                // phone number is at least 12 chars (may or may not have area code)
 Assert.IsTrue(comp.EmployeeCount >= 100 && comp.EmployeeCount <= 200); // EmployeeCount is between 100 and 200
+```
 
-----------
-Example 2:
-Set some properties. Fake rest.
-----------
+### Example 2:
+**Set some properties. Fake rest.**
 
+```c#
 // example FakeO call
 var comp = FakeO.Create.Fake<Company>(
                 c => c.Phone = "123-567-9012");
@@ -112,12 +108,12 @@ var comp = FakeO.Create.Fake<Company>(
 Assert.IsNotNull(comp.Name);                 // the Name property was set
 Assert.AreEqual("123-567-9012", comp.Phone); // phone number is 12 characters ("123-567-9012")
 Assert.IsTrue(comp.EmployeeCount > 0);       // EmployeeCount was set to a random number
+```
 
-----------
-Example 3:
-Random strings based on RegEx.
-----------
+### Example 3:
+**Random strings based on RegEx.**
 
+```c#
 // example FakeO call
 var comp = FakeO.Create.New<Company>(
                  c => c.Name = FakeO.Fake.Random(@"[A-Z][a-z]{6}"));
@@ -126,12 +122,12 @@ var comp = FakeO.Create.New<Company>(
 Assert.IsTrue(Regex.IsMatch(comp.Name, @"[A-Z][a-z]{6}")); // the Name property was set to 1 uppercase and 6 lowercase.
 Assert.AreEqual(default(string), comp.Phone);              // phone number was not set. left at default
 Assert.AreEqual(default(int), comp.EmployeeCount);         // EmployeeCount was not set. left at default
+```
 
-----------
-Example 4:
-List of items.
-----------
+### Example 4:
+**List of items.**
 
+```c#
 // example FakeO call
 var companies = FakeO.Create.New<Company>(5, // generate a list of length 5
                       c => c.Phone = FakeO.Fake.PhoneNumber());
@@ -139,12 +135,12 @@ var companies = FakeO.Create.New<Company>(5, // generate a list of length 5
 // tests
 Assert.IsTrue(companies is IEnumerable); // .New(int) returns an IEnumerable
 Assert.AreEqual(5, companies.Count());
+```
 
-----------
-Example 5:
-Used in conjunction with Moq.
-----------
+### Example 5:
+**Used in conjunction with Moq.**
 
+```c#
 // return 5 fake addresses when IAddressLookup.LoadAddresses() is called.
 
 var addressLookupMock = new Mock<IAddressLookup>();
@@ -157,5 +153,4 @@ addressLookupMock.Setup< List<Address> >(x => x.LoadAddresses()).Returns(
                     x => x.State = FakeO.Address.UsStateAbbr(),
                     x => x.Zip = FakeO.String.Random(@"\d{5}")
                   ).ToList());
-
-============================
+```
