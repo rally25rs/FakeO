@@ -65,10 +65,11 @@ These include:
 + TimeSpans (picks a random timespan between 0 and 10 days)
 
 A value for most built-in types can be retreived by simply doing:
+
 ```c#
-  var rndInt   = FakeO.Data.Random<int>();
-  var rndFloat = FakeO.Data.Random<float>();
-  var rndDate  = FakeO.Data.Random<DateTime>();
+var rndInt   = FakeO.Data.Random<int>();
+var rndFloat = FakeO.Data.Random<float>();
+var rndDate  = FakeO.Data.Random<DateTime>();
 ```
   ...etc...
 
