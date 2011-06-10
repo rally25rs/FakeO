@@ -42,25 +42,25 @@ Each of these actions is then run against each created object instance
 before FakeO returns it to you.
 
 FakeO will set data on any fields and properties that are both:
-  * either public or internal
-  * have a setter (in the case of properties)
++ either public or internal
++ have a setter (in the case of properties)
 
 In addition, FakeO contains a set of static classes and methods that
 can be used to retreive fake data. This makes up all the other classes
 in FakeO other than FakeO.Create.
 (Most of these are a fork of https://github.com/slashdotdash/faker-cs/)
 These include:
-  * Addresses (number, street, city, state)
-  * Person Names (first and/or last)
-  * Company Names
-  * Phone Numbers
-  * Lorem Ipsum style text (words, scentences, paragraphs)
-  * Numbers (int, long, float, double, etc.)
-  * Enum values (selects one value of an enum at random)
-  * GUIDs
-  * Strings (filled with random characters)
-  * DateTimes (picks a random date between the years 1900 and 2100)
-  * TimeSpans (picks a random timespan between 0 and 10 days)
++ Addresses (number, street, city, state)
++ Person Names (first and/or last)
++ Company Names
++ Phone Numbers
++ Lorem Ipsum style text (words, scentences, paragraphs)
++ Numbers (int, long, float, double, etc.)
++ Enum values (selects one value of an enum at random)
++ GUIDs
++ Strings (filled with random characters)
++ DateTimes (picks a random date between the years 1900 and 2100)
++ TimeSpans (picks a random timespan between 0 and 10 days)
 A value for most built-in types can be retreived by simply doing:
 ```c#
   var rndInt   = FakeO.Data.Random<int>();
