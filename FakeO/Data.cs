@@ -62,6 +62,16 @@ namespace FakeO
         var vals = Enum.GetValues(t);
         return vals.GetValue(Number.Next(0, vals.Length-1));
       }
+      if (t.IsGenericType && t.GetGenericTypeDefinition() == typeof(Nullable<>))
+      {
+        var t2 = Nullable.GetUnderlyingType(t);
+        if (t2.IsEnum)
+        {
+          var vals = Enum.GetValues(t2);
+          var n = Number.Next(0, vals.Length);
+          return n == 0 ? null : vals.GetValue(n - 1);
+        }
+      }
       if (t.IsValueType)
         return 0;
       return null;
