@@ -24,6 +24,17 @@ namespace FakeO
     /// <returns>Random data of the requested type.</returns>
     public static object Random(Type t)
     {
+      if (t == typeof(bool))
+        return (bool)(Number.Next(0, 100) < 50 ? false : true);
+      if (t == typeof(bool?))
+      {
+        var x = Number.Next(0, 100);
+        if (x <= 33)
+          return (bool?)false;
+        if (x <= 66)
+          return (bool?)true;
+        return (bool?)null;
+      }
       if (t == typeof(byte) || t == typeof(byte?))
         return (byte)Number.Next(Byte.MinValue, Byte.MaxValue);
       if (t == typeof(short) || t == typeof(short?))
