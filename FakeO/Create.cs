@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Reflection;
 
 namespace FakeO
@@ -123,8 +125,12 @@ namespace FakeO
       // dump fake data into properties
       foreach (var pi in typeof(T).GetProperties(BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
       {
-        if (pi.CanWrite && pi.GetSetMethod(true) != null && (pi.GetSetMethod(true).IsPublic || pi.GetSetMethod(true).IsAssembly))
-          pi.SetValue(obj, Data.Random(pi.PropertyType), null);
+          if (pi.CanWrite && pi.GetSetMethod(true) != null && (pi.GetSetMethod(true).IsPublic || pi.GetSetMethod(true).IsAssembly))
+          {
+              double min, max;
+              DetermineRange(pi, out min, out max);
+              pi.SetValue(obj, Data.Random(pi.PropertyType, min, max), null);
+          }
       }
       // dump fake data into fields
       foreach (var fi in typeof(T).GetFields(BindingFlags.Static | BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic))
@@ -134,5 +140,30 @@ namespace FakeO
       }
     }
 
+      private static void DetermineRange(PropertyInfo pi, out double min, out double max)
+      {
+          min = double.MinValue;
+          max = double.MaxValue;
+
+          var strLenAttrib = pi.GetCustomAttributes(typeof(StringLengthAttribute), true).Cast<StringLengthAttribute>().FirstOrDefault();
+          if(strLenAttrib != null)
+          {
+              min = strLenAttrib.MinimumLength;
+              max = strLenAttrib.MaximumLength;
+          }
+
+          var rangeAttrib = pi.GetCustomAttributes(typeof(RangeAttribute), true).Cast<RangeAttribute>().FirstOrDefault();
+          if(rangeAttrib != null)
+          {
+              try
+              {
+                  min = Convert.ToDouble(rangeAttrib.Minimum);
+                  max = Convert.ToDouble(rangeAttrib.Maximum);
+              }
+              catch (Exception)
+              {
+              }
+          }
+      }
   }
 }

@@ -45,7 +45,7 @@ namespace FakeO
     /// <returns></returns>
     public static string Random(int length)
     {
-      return Random("[A-Za-z]{" + length.ToString() + "}");
+      return Random("[a-z]{" + length.ToString() + "}");
     }
 
     /// <summary>

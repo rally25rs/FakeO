@@ -67,5 +67,21 @@ namespace FakeO.Tests
       Assert.AreNotEqual(null, obj.Nested.Prop1);
       Assert.AreNotEqual(null, obj.Nested.Field1);
     }
+
+      [TestMethod]
+      public void Fake_GeneratesStringsOfCorrectLength_WhenStringLengthAttributeProvided()
+      {
+          var obj = Create.Fake<StringLengthTestClass>();
+          Assert.AreEqual(5, obj.Property1.Length);
+          Assert.AreEqual(1, obj.Property2.Length);
+      }
+
+      [TestMethod]
+      public void Fake_GeneratesNumbersInRange_WhenRangeAttributeProvided()
+      {
+          var obj = Create.Fake<RangeTestClass>();
+          Assert.AreEqual(5, obj.Property1);
+          Assert.AreEqual(1, obj.Property2);          
+      }
   }
 }

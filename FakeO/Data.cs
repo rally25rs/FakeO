@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FakeO
 {
@@ -17,42 +14,37 @@ namespace FakeO
       return (T)Random(typeof(T));
     }
 
-    /// <summary>
-    /// Tries to guess at a random data value for a given type.
-    /// </summary>
-    /// <param name="t">The type to generate data for.</param>
-    /// <returns>Random data of the requested type.</returns>
-    public static object Random(Type t)
+      /// <summary>
+      /// Tries to guess at a random data value for a given type.
+      /// </summary>
+      /// <param name="t">The type to generate data for.</param>
+      /// <param name="min">Minimum value.</param>
+      /// <param name="max">Maximum value.</param>
+      /// <returns>Random data of the requested type.</returns>
+      public static object Random(Type t, double min = double.MinValue, double max = double.MaxValue)
     {
       if (t == typeof(bool))
-        return (bool)(Number.Next(0, 100) < 50 ? false : true);
+        return RandomBool();
       if (t == typeof(bool?))
-      {
-        var x = Number.Next(0, 100);
-        if (x <= 33)
-          return (bool?)false;
-        if (x <= 66)
-          return (bool?)true;
-        return (bool?)null;
-      }
+        return RandomBoolNullable();
       if (t == typeof(byte) || t == typeof(byte?))
-        return (byte)Number.Next(Byte.MinValue, Byte.MaxValue);
+        return RandomByte(min, max);
       if (t == typeof(short) || t == typeof(short?))
-        return (short)Number.Next(Int16.MinValue, Int16.MaxValue);
+        return RandomShort(min, max);
       if (t == typeof(int) || t == typeof(int?))
-        return Number.Next(Int32.MinValue, Int32.MaxValue);
+        return RandomInt(min, max);
       if (t == typeof(long) || t == typeof(long?))
-        return (long)Number.Next(Int32.MinValue, Int32.MaxValue);
+        return RandomLong(min, max);
       if (t == typeof(float) || t == typeof(float?))
-        return Number.NextFloat();
+        return RandomFloat(min, max);
       if (t == typeof(double) || t == typeof(double?))
-        return Number.NextDouble();
+        return RandomDouble(min, max);
       if (t == typeof(decimal) || t == typeof(decimal?))
-        return Number.NextDouble();
+        return RandomDecimal(min, max);
       if (t == typeof(char) || t == typeof(char?))
         return String.Random(1)[0];
       if (t == typeof(string))
-        return String.Random(10);
+        return RandomString(min, max);
       if (t == typeof(DateTime) || t == typeof(DateTime?))
         return new DateTime(Number.Next(1900, 2100), Number.Next(1, 12), Number.Next(1, 29), Number.Next(1,24), Number.Next(0,59), Number.Next(0,59));
       if (t == typeof(TimeSpan) || t == typeof(TimeSpan?))
@@ -76,5 +68,80 @@ namespace FakeO
         return 0;
       return null;
     }
+
+      private static string RandomString(double min, double max)
+      {
+          var length = RandomShort(min, max);
+          if (max == double.MaxValue)
+              length = 10;
+          return String.Random(length);
+      }
+
+      private static decimal RandomDecimal(double min, double max)
+      {
+          return (decimal)RandomDouble(min, max);
+      }
+
+      private static double RandomDouble(double min, double max)
+      {
+          return Number.NextDouble(min, max);
+      }
+
+      private static float RandomFloat(double min, double max)
+      {
+          var minimum = ToRange(min, float.MinValue, float.MaxValue);
+          var maximum = ToRange(max, float.MinValue, float.MaxValue);
+          return Number.NextFloat((float)minimum, (float)maximum);
+      }
+
+      private static object RandomLong(double min, double max)
+      {
+          return (long)RandomInt(min, max);
+      }
+
+      private static int RandomInt(double min, double max)
+      {
+          var minimum = ToRange(min, Int32.MinValue, Int32.MaxValue);
+          var maximum = ToRange(max, Int32.MinValue, Int32.MaxValue);
+          return Number.Next((int)minimum, (int)maximum);
+      }
+
+      private static short RandomShort(double min, double max)
+      {
+          var minimum = ToRange(min, Int16.MinValue, Int16.MaxValue);
+          var maximum = ToRange(max, Int16.MinValue, Int16.MaxValue);
+          return (short)Number.Next((short)minimum, (short)maximum);
+      }
+
+      private static byte RandomByte(double min, double max)
+      {
+          var minimum = ToRange(min, Byte.MinValue, Byte.MaxValue);
+          var maximum = ToRange(max, Byte.MinValue, Byte.MaxValue);
+          return (byte)Number.Next((byte)minimum, (byte)maximum);
+      }
+
+      private static bool? RandomBoolNullable()
+      {
+          var x = Number.Next(0, 100);
+          if (x <= 33)
+              return false;
+          if (x <= 66)
+              return true;
+          return null;
+      }
+
+      private static bool RandomBool()
+      {
+          return !(Number.Next(0, 100) < 50);
+      }
+
+      private static double ToRange(double value, double min, double max)
+      {
+          if (value < min)
+              return min;
+          if (value > max)
+              return max;
+          return value;
+      }
   }
 }

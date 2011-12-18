@@ -31,6 +31,11 @@ namespace FakeO
       return (float)(mantissa * exponent);
     }
 
+      public static float NextFloat(float min, float max)
+      {
+          return (float)_rnd.NextDouble() * (max - min) + min;
+      }
+
     public static double NextDouble()
     {
       return NextDouble(double.MinValue, double.MaxValue);
