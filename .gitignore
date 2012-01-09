@@ -39,3 +39,5 @@ TestResults/
 # Exclude ALL DLLs? (
 # *.dll
  
+# NuGet packages
+*.nupkg
