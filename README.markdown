@@ -158,3 +158,59 @@ addressLookupMock.Setup< List<Address> >(x => x.LoadAddresses()).Returns(
                     x => x.Zip = FakeO.String.Random(@"\d{5}")
                   ).ToList());
 ```
+
+## FakeO and MVC3 and EntityFramework 4.1
+
+FakeO also looks for the System.ComponentModel.DataAnnotations [StringLength] and [Range] attributes which are commonly used with MVC3 and EF data annotations.
+
+### Example:
+**Company.Name length will be between 2 and 5 characters.**
+
+```c#
+class Company()
+{
+  [StringLength(5, MinimumLength = 2)]
+  public string Name { get; set; }
+}
+
+var company = FakeO.Create.Fake<Company>();
+Assert.IsGreaterThan(1, company.Length);
+Assert.IsLessThan(6, company.Length);
+```
+
+## Remembering faked data types.
+
+Although FakeO is typically used through its exposed static methods, you can also create an instance of the FakeO.FakeCreator class.
+Using the instance of this class, you can have it "remember" how to fake a data type, and use it over and over.
+
+### Example:
+
+```c#
+// example object class
+class Company()
+{
+  public string Name { get; set; }
+  public string Phone { get; set; }
+  public int EmployeeCount { get; set; }
+}
+
+// example FakeO call
+var faker = new FakeO.FakeCreator();
+faker.Remember<Company>(
+                c => c.Name = FakeO.Company.Name(),
+                c => c.Phone = FakeO.Phone.Number(),
+                c => c.EmployeeCount = FakeO.Number.Next(100,200)); // random number from 100 to 200
+
+// create two instances of Company. The "remembered" actions are applied to both.
+var comp1 = faker.Fake<Company>();
+var comp2 = faker.Fake<Company>();
+
+// tests for first company
+Assert.IsNotNull(comp1.Name);                                            // the Name property was set
+Assert.IsTrue(comp1.Phone.Length >= 12);                                 // phone number is at least 12 chars (may or may not have area code)
+Assert.IsTrue(comp1.EmployeeCount >= 100 && comp1.EmployeeCount <= 200); // EmployeeCount is between 100 and 200
+// tests for second company
+Assert.IsNotNull(comp2.Name);                                            // the Name property was set
+Assert.IsTrue(comp2.Phone.Length >= 12);                                 // phone number is at least 12 chars (may or may not have area code)
+Assert.IsTrue(comp2.EmployeeCount >= 100 && comp2.EmployeeCount <= 200); // EmployeeCount is between 100 and 200
+```

@@ -48,6 +48,7 @@
     <Compile Include="Extenstions\ArrayExtensions.cs" />
     <Compile Include="Extenstions\EnumerableExtensions.cs" />
     <Compile Include="Extenstions\StringExtensions.cs" />
+    <Compile Include="FakeCreator.cs" />
     <Compile Include="Internet.cs" />
     <Compile Include="Lorem.cs" />
     <Compile Include="Name.cs" />

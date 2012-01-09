@@ -53,6 +53,7 @@
     <Compile Include="ObjectCreationTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomStringTest.cs" />
+    <Compile Include="RememberTest.cs" />
     <Compile Include="TestClasses.cs" />
   </ItemGroup>
   <ItemGroup>

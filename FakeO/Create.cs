@@ -23,7 +23,7 @@ namespace FakeO
     public static T New<T>(params Action<T>[] actions) where T : class
     {
       T obj;
-      var constructor = typeof(T).GetConstructor(System.Type.EmptyTypes);
+      var constructor = typeof(T).GetConstructor(Type.EmptyTypes);
       if (typeof(T).IsValueType || constructor == null)
         obj = default(T);
       else
@@ -46,9 +46,9 @@ namespace FakeO
     public static IEnumerable<T> New<T>(int count, params Action<T>[] actions) where T : class
     {
       if (count < 0)
-        throw new ArgumentOutOfRangeException("'count' must be greater than or equal to 0.");
+        throw new ArgumentOutOfRangeException("count", count, "'count' must be greater than or equal to 0.");
       for (int i = 0; i < count; i++)
-        yield return New<T>(actions);
+        yield return New(actions);
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace FakeO
     /// <returns>An enumerable of the requested type.</returns>
     public static IEnumerable<T> New<T>(int minCount, int maxCount, params Action<T>[] actions) where T : class
     {
-      return New<T>(Number.Next(minCount, maxCount), actions);
+      return New(Number.Next(minCount, maxCount), actions);
     }
 
     #endregion
@@ -78,7 +78,7 @@ namespace FakeO
     /// <returns>One new instance on the requested type.</returns>
     public static T Fake<T>(params Action<T>[] actions) where T : class
     {
-      T obj = New<T>();
+      var obj = New<T>();
 
       FakeTheRest(obj);
 
@@ -99,9 +99,9 @@ namespace FakeO
     public static IEnumerable<T> Fake<T>(int count, params Action<T>[] actions) where T : class
     {
       if (count < 0)
-        throw new ArgumentOutOfRangeException("'count' must be greater than or equal to 0.");
+        throw new ArgumentOutOfRangeException("count", count, "'count' must be greater than or equal to 0.");
       for (int i = 0; i < count; i++)
-        yield return Fake<T>(actions);
+        yield return Fake(actions);
     }
 
     /// <summary>
@@ -115,7 +115,7 @@ namespace FakeO
     /// <returns>An enumerable of the requested type.</returns>
     public static IEnumerable<T> Fake<T>(int minCount, int maxCount, params Action<T>[] actions) where T : class
     {
-      return Fake<T>(Number.Next(minCount, maxCount), actions);
+      return Fake(Number.Next(minCount, maxCount), actions);
     }
 
     #endregion
@@ -160,8 +160,12 @@ namespace FakeO
                   min = Convert.ToDouble(rangeAttrib.Minimum);
                   max = Convert.ToDouble(rangeAttrib.Maximum);
               }
+// ReSharper disable EmptyGeneralCatchClause
               catch (Exception)
+// ReSharper restore EmptyGeneralCatchClause
               {
+				  // intentionally ignoring errors.
+				  // min and max will be left at their already set values.
               }
           }
       }
