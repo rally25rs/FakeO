@@ -4,6 +4,11 @@
 This simple utility library can be used to rig up data objects in .NET.
 The intention is that it be used in conjunction with other mocking tools, like Moq.
 
+> The FakeO library is available in NuGet.
+> You can reference FakeO by searching for "FakeO" in the NuGet package manager UI,
+> or by running the command:
+>    Install-Package FakeO
+
 Originally, I ran into needing to mock a
   List<MyObject>
 where MyObject was an object with over 60 properties.
