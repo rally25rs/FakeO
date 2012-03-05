@@ -83,5 +83,13 @@ namespace FakeO.Tests
           Assert.AreEqual(5, obj.Property1);
           Assert.AreEqual(1, obj.Property2);          
       }
+
+      [TestMethod]
+      public void Fake_CanHandleDecimalsAndDoubles()
+      {
+          var obj = Create.Fake<DoubleAndDecimalTestClass>();
+          Assert.AreNotEqual(0, obj.Decimal);
+          Assert.AreNotEqual(0, obj.Double);
+      }
   }
 }

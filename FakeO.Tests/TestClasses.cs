@@ -77,4 +77,10 @@ namespace FakeO.Tests
         [Range(1, 1)]
         public long Property2 { get; set; }
     }
+
+    public class DoubleAndDecimalTestClass
+    {
+        public double Double { get; set; }
+        public decimal Decimal { get; set; }
+    }
 }

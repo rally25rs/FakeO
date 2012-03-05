@@ -79,6 +79,10 @@ namespace FakeO
 
       private static decimal RandomDecimal(double min, double max)
       {
+          if ((double)decimal.MinValue > min)
+              min = (double)decimal.MinValue;
+          if ((double)decimal.MaxValue < max)
+              max = (double)decimal.MaxValue;
           return (decimal)RandomDouble(min, max);
       }
 
