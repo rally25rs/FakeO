@@ -91,5 +91,13 @@ namespace FakeO.Tests
           Assert.AreNotEqual(0, obj.Decimal);
           Assert.AreNotEqual(0, obj.Double);
       }
+
+      [TestMethod]
+      public void Fake_CanHandleGuids()
+      {
+          var guidObject = Create.Fake<TestClassWithAGuid>();
+
+          Assert.AreNotEqual(Guid.Empty, guidObject.UniqueId);
+      }
   }
 }

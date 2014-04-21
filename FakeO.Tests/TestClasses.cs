@@ -54,6 +54,13 @@ namespace FakeO.Tests
     public TimeSpan ManuallySetTime;
   }
 
+    public class TestClassWithAGuid
+    {
+        public string Property1 { get; set; }
+        public string Property2 { get; set; }
+        public Guid UniqueId { get; set; }
+    }
+
   public class NestedTestClass
   {
     public PublicTestClass Nested { get; set; }
