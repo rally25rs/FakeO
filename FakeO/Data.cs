@@ -43,6 +43,8 @@ namespace FakeO
         return RandomDecimal(min, max);
       if (t == typeof(char) || t == typeof(char?))
         return String.Random(1)[0];
+      if (t == typeof(Guid) || t == typeof(Guid?)) 
+        return Guid.NewGuid();       // By defination Guids are to be unique
       if (t == typeof(string))
         return RandomString(min, max);
       if (t == typeof(DateTime) || t == typeof(DateTime?))
