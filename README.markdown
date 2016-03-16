@@ -125,7 +125,7 @@ Assert.IsTrue(comp.EmployeeCount > 0);       // EmployeeCount was set to a rando
 ```c#
 // example FakeO call
 var comp = FakeO.Create.New<Company>(
-                 c => c.Name = FakeO.Fake.Random(@"[A-Z][a-z]{6}"));
+                 c => c.Name = FakeO.String.Random(@"[A-Z][a-z]{6}"));
 
 // tests
 Assert.IsTrue(Regex.IsMatch(comp.Name, @"[A-Z][a-z]{6}")); // the Name property was set to 1 uppercase and 6 lowercase.
@@ -139,7 +139,7 @@ Assert.AreEqual(default(int), comp.EmployeeCount);         // EmployeeCount was 
 ```c#
 // example FakeO call
 var companies = FakeO.Create.New<Company>(5, // generate a list of length 5
-                      c => c.Phone = FakeO.Fake.PhoneNumber());
+                      c => c.Phone = FakeO.Phone.Number());
 
 // tests
 Assert.IsTrue(companies is IEnumerable); // .New(int) returns an IEnumerable
